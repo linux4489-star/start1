@@ -1,0 +1,74 @@
+╔════════════════════════════════════════════════════════════════╗
+║         DEPLOY TO RAILWAY.APP IN 3 MINUTES                     ║
+╚════════════════════════════════════════════════════════════════╝
+
+Your video streaming app is ready for instant deployment!
+
+════════════════════════════════════════════════════════════════
+
+OPTION 1: RAILWAY DASHBOARD (Easiest - No Command Line)
+
+1. Go to: https://railway.app/dashboard
+2. Sign up / Log in (connect your GitHub account)
+3. Click "Create New Project" 
+4. Select "GitHub Repo"
+5. Choose: linux4489-star/video-streaming-app
+6. Railway auto-detects our config and deploys!
+7. Wait 2-3 minutes...
+8. Your app is LIVE! 🎉
+
+Look for the deployed URL in your Railway dashboard.
+
+════════════════════════════════════════════════════════════════
+
+OPTION 2: RAILWAY CLI (Command Line)
+
+Install Railway CLI first:
+  npm install -g @railway/cli
+
+Then run:
+  cd C:\FullGTA_Game\video-streaming-app
+  railway login
+  railway init
+  railway up
+
+Done! Your app will be live in 2-3 minutes.
+
+════════════════════════════════════════════════════════════════
+
+DEFAULT LOGIN CREDENTIALS
+
+After deployment, use these to log in:
+  Email:    owner@moviehub.com
+  Password: linux@5566
+
+Test by uploading a video!
+
+════════════════════════════════════════════════════════════════
+
+WHAT HAPPENS ON RAILWAY
+
+✓ Docker image automatically built
+✓ App starts on port 3000
+✓ HTTPS/SSL enabled automatically
+✓ Custom domain support
+✓ Auto-scaling on free tier
+✓ Environment variables: JWT_SECRET is set
+
+════════════════════════════════════════════════════════════════
+
+NEXT: Your app will be live at:
+  https://your-app-name.railway.app
+
+SHARE THIS URL with anyone to let them use your video app!
+
+════════════════════════════════════════════════════════════════
+
+NEED HELP?
+
+Check these docs:
+  • DEPLOYMENT_COMPLETE.md - All cloud options
+  • PRODUCTION_READY.md - Detailed instructions
+  • TROUBLESHOOTING.md - Common issues
+
+════════════════════════════════════════════════════════════════

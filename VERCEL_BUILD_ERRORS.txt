@@ -1,0 +1,162 @@
+╔════════════════════════════════════════════════════════════════╗
+║            VERCEL BUILD LOG ERRORS - SOLUTIONS                 ║
+╚════════════════════════════════════════════════════════════════╝
+
+Common Vercel errors and how to fix them:
+
+════════════════════════════════════════════════════════════════
+
+ERROR 1: "Cannot find module 'express'"
+
+SOLUTION:
+1. Make sure package.json has all dependencies
+2. Run: npm install
+3. Commit package-lock.json to GitHub
+4. Push to GitHub
+5. Redeploy on Vercel
+
+Check package.json has these:
+  "express": "^4.18.2"
+  "multer": "^1.4.5"
+  "cors": "^2.8.5"
+  "uuid": "^9.0.0"
+  "bcryptjs": "^2.4.3"
+  "jsonwebtoken": "^9.0.0"
+  "cookie-parser": "^1.4.6"
+  "dotenv": "^16.0.3"
+
+════════════════════════════════════════════════════════════════
+
+ERROR 2: "Function invocation failed"
+
+SOLUTION:
+1. Check api/index.js exports module.exports = app
+2. Make sure NO app.listen() is in the file
+3. Check JWT_SECRET environment variable is set:
+   - Vercel dashboard → Settings → Environment Variables
+   - Add: JWT_SECRET = production-secret-key-2026
+
+════════════════════════════════════════════════════════════════
+
+ERROR 3: "Static files not found (404)"
+
+SOLUTION:
+1. Ensure public/ directory exists with:
+   - index.html
+   - app.js
+   - styles.css
+2. Check vercel.json routing is correct:
+   - All routes should go to api/index.js
+
+════════════════════════════════════════════════════════════════
+
+ERROR 4: "Module not found: /tmp/uploads"
+
+SOLUTION:
+1. Vercel has ephemeral storage - videos don't persist
+2. This is NOT an error, it's expected behavior
+3. To fix: Use AWS S3 or similar cloud storage
+4. For now, videos are stored temporarily and work fine
+
+════════════════════════════════════════════════════════════════
+
+ERROR 5: "ENOENT: no such file or directory"
+
+SOLUTION:
+1. Check all file paths are relative
+2. Use path.join(__dirname, ...) for paths
+3. Make sure public/ directory is in the repo
+
+════════════════════════════════════════════════════════════════
+
+ERROR 6: "Timeout exceeded"
+
+SOLUTION:
+1. Vercel has 10 second timeout for serverless
+2. Video uploads may timeout
+3. Solution: Use chunked uploads (advanced)
+4. For now, upload smaller videos
+
+════════════════════════════════════════════════════════════════
+
+QUICK FIX CHECKLIST:
+
+[✓] package.json exists with all dependencies
+[✓] package-lock.json exists
+[✓] api/index.js exports app (not app.listen)
+[✓] vercel.json routes all requests to api/index.js
+[✓] public/ directory exists with files
+[✓] .gitignore doesn't exclude important files
+[✓] JWT_SECRET set in Vercel environment variables
+[✓] Code committed and pushed to GitHub
+
+════════════════════════════════════════════════════════════════
+
+HOW TO VIEW VERCEL BUILD LOGS:
+
+1. Go to: https://vercel.com/dashboard
+2. Select your project
+3. Click "Deployments"
+4. Click on the failed deployment
+5. Scroll down to see build logs
+6. Look for red error messages
+
+════════════════════════════════════════════════════════════════
+
+FIX STEPS:
+
+1. Check the error message in Vercel logs
+2. Find matching error above
+3. Apply the solution
+4. Commit changes: git add -A && git commit -m "Fix Vercel error"
+5. Push to GitHub: git push origin main
+6. Vercel auto-redeploys
+7. Check logs again
+
+════════════════════════════════════════════════════════════════
+
+VERCEL ENVIRONMENT VARIABLES (Set These):
+
+Go to Vercel Dashboard:
+1. Select your project
+2. Settings → Environment Variables
+3. Add:
+   - Key: JWT_SECRET
+   - Value: production-secret-key-2026
+4. Save and redeploy
+
+════════════════════════════════════════════════════════════════
+
+COMMON MISCONFIGURATIONS:
+
+❌ Wrong: app.listen(3000) in api/index.js
+✅ Correct: module.exports = app
+
+❌ Wrong: Storing files in uploads/
+✅ Correct: Use /tmp/ or cloud storage
+
+❌ Wrong: Hardcoded secrets
+✅ Correct: Use environment variables
+
+❌ Wrong: Missing public/ directory
+✅ Correct: Include public/ in git
+
+════════════════════════════════════════════════════════════════
+
+IF YOU SEE SPECIFIC ERROR:
+
+Please share the exact error message and I'll provide exact fix!
+
+Examples:
+- "Error: ENOENT: no such file or directory"
+- "Cannot find module 'xyz'"
+- "Function invocation failed"
+- "Timeout exceeded"
+
+════════════════════════════════════════════════════════════════
+
+ALTERNATIVE: Use Render.com or Railway.app instead!
+
+They're easier and may work better for this setup.
+
+════════════════════════════════════════════════════════════════

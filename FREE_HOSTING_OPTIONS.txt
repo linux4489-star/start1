@@ -1,0 +1,136 @@
+╔════════════════════════════════════════════════════════════════╗
+║                    FREE CLOUD HOSTING OPTIONS                   ║
+╚════════════════════════════════════════════════════════════════╝
+
+All these platforms offer FREE tiers for your video streaming app!
+
+════════════════════════════════════════════════════════════════
+
+🟢 1. RENDER.COM (BEST FREE OPTION)
+
+✓ FREE: 750 hours/month (about 31 days)
+✓ FREE: SSL/HTTPS included
+✓ FREE: Custom domains
+✓ FREE: Auto-deploy from GitHub
+
+**Deploy Steps:**
+1. https://render.com
+2. Sign up with GitHub
+3. New Web Service → Select linux4489-star/video-streaming-app
+4. Environment: Docker
+5. Add JWT_SECRET=production-secret-key-2026
+6. Create → Live in 3-5 min
+
+**Cost:** FREE (750 hours/month)
+
+════════════════════════════════════════════════════════════════
+
+🟢 2. RAILWAY.APP (VERY EASY)
+
+✓ FREE: 5GB bandwidth/month
+✓ FREE: SSL/HTTPS included
+✓ FREE: Auto-deploy from GitHub
+✓ FREE: PostgreSQL database
+
+**Deploy Steps:**
+1. https://railway.app
+2. Sign up with GitHub
+3. New Project → GitHub Repo → Select your repo
+4. Auto-deploys in 2-3 min
+
+**Cost:** FREE (5GB bandwidth)
+
+════════════════════════════════════════════════════════════════
+
+🟢 3. HEROKU (CLASSIC)
+
+✓ FREE: 550-1000 hours/month (may require credit card)
+✓ FREE: SSL/HTTPS included
+✓ FREE: Custom domains
+✓ FREE: Add-ons available
+
+**Deploy Steps:**
+1. https://heroku.com
+2. Sign up
+3. Install Heroku CLI: npm install -g heroku
+4. heroku login
+5. heroku create your-app-name
+6. heroku config:set JWT_SECRET=production-secret-key-2026
+7. git push heroku main
+
+**Cost:** FREE (with limits)
+
+════════════════════════════════════════════════════════════════
+
+🟢 4. VERCEL (FOR STATIC SITES)
+
+✓ FREE: Unlimited bandwidth
+✓ FREE: SSL/HTTPS included
+✓ FREE: Custom domains
+✓ FREE: Global CDN
+
+**Deploy Steps:**
+1. https://vercel.com
+2. Sign up with GitHub
+3. Import project → Select linux4489-star/video-streaming-app
+4. Deploy (may need config adjustments)
+
+**Cost:** FREE (unlimited)
+
+════════════════════════════════════════════════════════════════
+
+🟢 5. NETLIFY (STATIC SITES)
+
+✓ FREE: 100GB bandwidth/month
+✓ FREE: SSL/HTTPS included
+✓ FREE: Custom domains
+✓ FREE: Form handling
+
+**Deploy Steps:**
+1. https://netlify.com
+2. Sign up with GitHub
+3. New site from Git → Select repo
+4. Deploy
+
+**Cost:** FREE (100GB bandwidth)
+
+════════════════════════════════════════════════════════════════
+
+🔑 YOUR LOGIN CREDENTIALS
+
+Email:    owner@moviehub.com
+Password: linux@5566
+
+════════════════════════════════════════════════════════════════
+
+📊 FREE TIER LIMITS
+
+RENDER.COM: 750 hours/month (~$0 if exceeded)
+RAILWAY:    5GB bandwidth/month
+HEROKU:     550 hours/month (may pause)
+VERCEL:     Unlimited bandwidth
+NETLIFY:    100GB bandwidth/month
+
+════════════════════════════════════════════════════════════════
+
+🎯 RECOMMENDATION
+
+For your VIDEO STREAMING APP, use:
+1. **RENDER.COM** (most free hours, Docker support)
+2. **RAILWAY.APP** (easiest setup)
+
+Both support your Docker container perfectly!
+
+════════════════════════════════════════════════════════════════
+
+🚀 QUICK START
+
+Pick one above → Follow steps → Live in minutes!
+
+Your app will be FREE and PUBLIC forever!
+
+════════════════════════════════════════════════════════════════
+
+Questions? All platforms have excellent docs and support.
+
+════════════════════════════════════════════════════════════════
