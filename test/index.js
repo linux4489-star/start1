@@ -1,61 +1,22 @@
 'use strict';
 
 var test = require('tape');
+var hasSymbols = require('../');
+var runSymbolTests = require('./tests');
 
-var callBound = require('../');
+test('interface', function (t) {
+	t.equal(typeof hasSymbols, 'function', 'is a function');
+	t.equal(typeof hasSymbols(), 'boolean', 'returns a boolean');
+	t.end();
+});
 
-/** @template {true} T @template U @typedef {T extends U ? T : never} AssertType */
+test('Symbols are supported', { skip: !hasSymbols() }, function (t) {
+	runSymbolTests(t);
+	t.end();
+});
 
-test('callBound', function (t) {
-	// static primitive
-	t.equal(callBound('Array.length'), Array.length, 'Array.length yields itself');
-	t.equal(callBound('%Array.length%'), Array.length, '%Array.length% yields itself');
-
-	// static non-function object
-	t.equal(callBound('Array.prototype'), Array.prototype, 'Array.prototype yields itself');
-	t.equal(callBound('%Array.prototype%'), Array.prototype, '%Array.prototype% yields itself');
-	t.equal(callBound('Array.constructor'), Array.constructor, 'Array.constructor yields itself');
-	t.equal(callBound('%Array.constructor%'), Array.constructor, '%Array.constructor% yields itself');
-
-	// static function
-	t.equal(callBound('Date.parse'), Date.parse, 'Date.parse yields itself');
-	t.equal(callBound('%Date.parse%'), Date.parse, '%Date.parse% yields itself');
-
-	// prototype primitive
-	t.equal(callBound('Error.prototype.message'), Error.prototype.message, 'Error.prototype.message yields itself');
-	t.equal(callBound('%Error.prototype.message%'), Error.prototype.message, '%Error.prototype.message% yields itself');
-
-	var x = callBound('Object.prototype.toString');
-	var y = callBound('%Object.prototype.toString%');
-
-	// prototype function
-	t.notEqual(x, Object.prototype.toString, 'Object.prototype.toString does not yield itself');
-	t.notEqual(y, Object.prototype.toString, '%Object.prototype.toString% does not yield itself');
-	t.equal(x(true), Object.prototype.toString.call(true), 'call-bound Object.prototype.toString calls into the original');
-	t.equal(y(true), Object.prototype.toString.call(true), 'call-bound %Object.prototype.toString% calls into the original');
-
-	t['throws'](
-		// @ts-expect-error
-		function () { callBound('does not exist'); },
-		SyntaxError,
-		'nonexistent intrinsic throws'
-	);
-	t['throws'](
-		// @ts-expect-error
-		function () { callBound('does not exist', true); },
-		SyntaxError,
-		'allowMissing arg still throws for unknown intrinsic'
-	);
-
-	t.test('real but absent intrinsic', { skip: typeof WeakRef !== 'undefined' }, function (st) {
-		st['throws'](
-			function () { callBound('WeakRef'); },
-			TypeError,
-			'real but absent intrinsic throws'
-		);
-		st.equal(callBound('WeakRef', true), undefined, 'allowMissing arg avoids exception');
-		st.end();
-	});
-
+test('Symbols are not supported', { skip: hasSymbols() }, function (t) {
+	t.equal(typeof Symbol, 'undefined', 'global Symbol is undefined');
+	t.equal(typeof Object.getOwnPropertySymbols, 'undefined', 'Object.getOwnPropertySymbols does not exist');
 	t.end();
 });

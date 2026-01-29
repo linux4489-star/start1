@@ -1,24 +1,78 @@
 {
-  "name": "video-streaming-app",
-  "version": "1.0.0",
-  "description": "Video streaming website with upload and playback",
-  "main": "api/index.js",
+  "name": "semver",
+  "version": "7.7.3",
+  "description": "The semantic version parser used by npm.",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
-    "build": "echo 'Building...'"
-  },
-  "dependencies": {
-    "express": "^4.18.2",
-    "multer": "^1.4.5-lts.1",
-    "dotenv": "^16.0.3",
-    "cors": "^2.8.5",
-    "uuid": "^9.0.0",
-    "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.0",
-    "cookie-parser": "^1.4.6"
+    "test": "tap",
+    "snap": "tap",
+    "lint": "npm run eslint",
+    "postlint": "template-oss-check",
+    "lintfix": "npm run eslint -- --fix",
+    "posttest": "npm run lint",
+    "template-oss-apply": "template-oss-apply --force",
+    "eslint": "eslint \"**/*.{js,cjs,ts,mjs,jsx,tsx}\""
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "@npmcli/eslint-config": "^5.0.0",
+    "@npmcli/template-oss": "4.25.1",
+    "benchmark": "^2.1.4",
+    "tap": "^16.0.0"
+  },
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/npm/node-semver.git"
+  },
+  "bin": {
+    "semver": "bin/semver.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "classes/",
+    "functions/",
+    "internal/",
+    "ranges/",
+    "index.js",
+    "preload.js",
+    "range.bnf"
+  ],
+  "tap": {
+    "timeout": 30,
+    "coverage-map": "map.js",
+    "nyc-arg": [
+      "--exclude",
+      "tap-snapshots/**"
+    ]
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "author": "GitHub Inc.",
+  "templateOSS": {
+    "//@npmcli/template-oss": "This file is partially managed by @npmcli/template-oss. Edits may be overwritten.",
+    "version": "4.25.1",
+    "engines": ">=10",
+    "distPaths": [
+      "classes/",
+      "functions/",
+      "internal/",
+      "ranges/",
+      "index.js",
+      "preload.js",
+      "range.bnf"
+    ],
+    "allowPaths": [
+      "/classes/",
+      "/functions/",
+      "/internal/",
+      "/ranges/",
+      "/index.js",
+      "/preload.js",
+      "/range.bnf",
+      "/benchmarks"
+    ],
+    "publish": "true"
   }
 }
