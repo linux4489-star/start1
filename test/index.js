@@ -2,65 +2,58 @@
 
 var test = require('tape');
 
-var getProto = require('../');
+var callBound = require('../');
 
-test('getProto', function (t) {
-	t.equal(typeof getProto, 'function', 'is a function');
+/** @template {true} T @template U @typedef {T extends U ? T : never} AssertType */
 
-	t.test('can get', { skip: !getProto }, function (st) {
-		if (getProto) { // TS doesn't understand tape's skip
-			var proto = { b: 2 };
-			st.equal(getProto(proto), Object.prototype, 'proto: returns the [[Prototype]]');
+test('callBound', function (t) {
+	// static primitive
+	t.equal(callBound('Array.length'), Array.length, 'Array.length yields itself');
+	t.equal(callBound('%Array.length%'), Array.length, '%Array.length% yields itself');
 
-			st.test('nullish value', function (s2t) {
-			// @ts-expect-error
-				s2t['throws'](function () { return getProto(undefined); }, TypeError, 'undefined is not an object');
-				// @ts-expect-error
-				s2t['throws'](function () { return getProto(null); }, TypeError, 'null is not an object');
-				s2t.end();
-			});
+	// static non-function object
+	t.equal(callBound('Array.prototype'), Array.prototype, 'Array.prototype yields itself');
+	t.equal(callBound('%Array.prototype%'), Array.prototype, '%Array.prototype% yields itself');
+	t.equal(callBound('Array.constructor'), Array.constructor, 'Array.constructor yields itself');
+	t.equal(callBound('%Array.constructor%'), Array.constructor, '%Array.constructor% yields itself');
 
-			// @ts-expect-error
-			st['throws'](function () { getProto(true); }, 'throws for true');
-			// @ts-expect-error
-			st['throws'](function () { getProto(false); }, 'throws for false');
-			// @ts-expect-error
-			st['throws'](function () { getProto(42); }, 'throws for 42');
-			// @ts-expect-error
-			st['throws'](function () { getProto(NaN); }, 'throws for NaN');
-			// @ts-expect-error
-			st['throws'](function () { getProto(0); }, 'throws for +0');
-			// @ts-expect-error
-			st['throws'](function () { getProto(-0); }, 'throws for -0');
-			// @ts-expect-error
-			st['throws'](function () { getProto(Infinity); }, 'throws for ∞');
-			// @ts-expect-error
-			st['throws'](function () { getProto(-Infinity); }, 'throws for -∞');
-			// @ts-expect-error
-			st['throws'](function () { getProto(''); }, 'throws for empty string');
-			// @ts-expect-error
-			st['throws'](function () { getProto('foo'); }, 'throws for non-empty string');
-			st.equal(getProto(/a/g), RegExp.prototype);
-			st.equal(getProto(new Date()), Date.prototype);
-			st.equal(getProto(function () {}), Function.prototype);
-			st.equal(getProto([]), Array.prototype);
-			st.equal(getProto({}), Object.prototype);
+	// static function
+	t.equal(callBound('Date.parse'), Date.parse, 'Date.parse yields itself');
+	t.equal(callBound('%Date.parse%'), Date.parse, '%Date.parse% yields itself');
 
-			var nullObject = { __proto__: null };
-			if ('toString' in nullObject) {
-				st.comment('no null objects in this engine');
-				st.equal(getProto(nullObject), Object.prototype, '"null" object has Object.prototype as [[Prototype]]');
-			} else {
-				st.equal(getProto(nullObject), null, 'null object has null [[Prototype]]');
-			}
-		}
+	// prototype primitive
+	t.equal(callBound('Error.prototype.message'), Error.prototype.message, 'Error.prototype.message yields itself');
+	t.equal(callBound('%Error.prototype.message%'), Error.prototype.message, '%Error.prototype.message% yields itself');
 
-		st.end();
-	});
+	var x = callBound('Object.prototype.toString');
+	var y = callBound('%Object.prototype.toString%');
 
-	t.test('can not get', { skip: !!getProto }, function (st) {
-		st.equal(getProto, null);
+	// prototype function
+	t.notEqual(x, Object.prototype.toString, 'Object.prototype.toString does not yield itself');
+	t.notEqual(y, Object.prototype.toString, '%Object.prototype.toString% does not yield itself');
+	t.equal(x(true), Object.prototype.toString.call(true), 'call-bound Object.prototype.toString calls into the original');
+	t.equal(y(true), Object.prototype.toString.call(true), 'call-bound %Object.prototype.toString% calls into the original');
 
+	t['throws'](
+		// @ts-expect-error
+		function () { callBound('does not exist'); },
+		SyntaxError,
+		'nonexistent intrinsic throws'
+	);
+	t['throws'](
+		// @ts-expect-error
+		function () { callBound('does not exist', true); },
+		SyntaxError,
+		'allowMissing arg still throws for unknown intrinsic'
+	);
+
+	t.test('real but absent intrinsic', { skip: typeof WeakRef !== 'undefined' }, function (st) {
+		st['throws'](
+			function () { callBound('WeakRef'); },
+			TypeError,
+			'real but absent intrinsic throws'
+		);
+		st.equal(callBound('WeakRef', true), undefined, 'allowMissing arg avoids exception');
 		st.end();
 	});
 
